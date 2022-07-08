@@ -1,0 +1,23 @@
+version: '3'
+services:
+  terraform:
+    image: hashicorp/terraform:1.2.4
+    env_file:
+      - .env
+    volumes:
+      - ./terraform:/terraform
+    working_dir: /terraform
+    entrypoint: ash
+    tty: true
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+    environment: 
+      - PMA_ARBITRARY=1
+      - PMA_HOST=ec2-54-64-155-180.ap-northeast-1.compute.amazonaws.com
+      - PMA_USER=root
+      - PMA_PASSWORD=password
